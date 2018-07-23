@@ -68,7 +68,7 @@
 .character-div:hover{
     color:#fff;
     text-shadow: 0 0 10px #c00;
-      }
+}
 
 .one-character-div{
     color: #ccc;
@@ -92,7 +92,7 @@
 .one-character-div-house{
     width: 30%;
     float: left;
-    text-align: right;
+    text-align: center;
 }
 
 #search-button{
@@ -111,8 +111,14 @@
     background: white url(/assets/icon/search-icon.png) left no-repeat;
     padding-left: 17px;
 }
+
+.selected{
+    color:#c00;
+    text-shadow: 0 0 5px #cc0;
+    font-weight: bold;
+}
   
-  @media(max-width:1200px){
+  @media(max-width:992px){
     .container>div{
       float: left;
       height: auto;
@@ -135,5 +141,24 @@
       left:20px;
       margin-top:20px;
       z-index: 2;
+    }
+
+    .character-div{
+        width: 25%;
+    }
+    .one-character-div{
+        text-align: center;
+    }
+    .one-character-div-name, .one-character-div-house{
+        width: 100%;    
+    }
+
+  }
+  @media(max-width:600px){
+    .character-div{
+        width: 50%;
+    }
+    .one-character-div div:last-child{
+        text-align: justify;
     }
   }

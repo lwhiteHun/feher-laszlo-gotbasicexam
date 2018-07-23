@@ -67,14 +67,14 @@ function createCharacterDiv(container, divname) {
 }
 
 function createImage(target, alt) {
-  console.log(target);
+  // console.log(target);
   let img = document.createElement('img');
   img.src = '/' + target;
   img.alt = alt;
   img.onerror = function (e) {
     e.target.src = '/assets/noimage.png';
   };
-  console.log(img);
+  // console.log(img);
   return img;
 }
 
@@ -105,6 +105,13 @@ function showOneCharacter(character) {
   container.appendChild(oneCharacterDiv);
 }
 
+function removeSelectedTags() {
+  var characterDivs = document.querySelectorAll('.character-div');
+  for (let i = 0; i < characterDivs.length; i++) {
+    characterDivs[i].classList.remove('selected');
+  }
+}
+
 function showCharacters(userDatas) {
   let mainDiv = document.querySelector('.character-list');
   for (let i = 0; i < userDatas.length; i++) {
@@ -119,8 +126,11 @@ function showCharacters(userDatas) {
     };
     characterDiv.appendChild(characterImg);
     */
-    characterDiv.innerHTML = `<img src="/${userDatas[i].portrait}" alt=""><h6>${userDatas[i].name}</h6>`;
+    characterDiv.innerHTML = `<img src="/${userDatas[i].portrait}" alt="">
+    <h6>${userDatas[i].name}</h6>`;
     characterDiv.addEventListener('click', function () {
+      removeSelectedTags();
+      characterDiv.classList.add('selected');
       showOneCharacter(userDatas[i]);
     });
     mainDiv.appendChild(characterDiv);
