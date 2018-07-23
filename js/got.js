@@ -27,6 +27,9 @@ function successAjax(xhttp) {
   orderCharactersToNameAsc(userDatas);
   console.log(userDatas);
   showCharacters(userDatas);
+  document.querySelector('#search-button').addEventListener('click', function () {
+    searchForCharacter(userDatas);
+  });
 }
 
 // Írd be a json fileod nevét/útvonalát úgy, ahogy nálad van
@@ -63,18 +66,37 @@ function createCharacterDiv(container, divname) {
   return oneCharacterDiv;
 }
 
+function createImage(target, alt) {
+  console.log(target);
+  let img = document.createElement('img');
+  img.src = '/' + target;
+  img.alt = alt;
+  img.onerror = function (e) {
+    e.target.src = '/assets/noimage.png';
+  };
+  console.log(img);
+  return img;
+}
+
 function showOneCharacter(character) {
   let container = document.querySelector('.one-character');
   let oneCharacterDiv = createCharacterDiv(container, 'one-character-div');
   oneCharacterDiv.innerHTML = '';
-  let img = document.createElement('img');
-  img.src = '/' + character.picture;
-  img.alt = character.name;
-  img.onerror = function (e) {
-    e.target.src = '/assets/noimage.png';
-  };
-  oneCharacterDiv.innerHTML = '';
+  let img = createImage(character.picture, character.name);
+
   oneCharacterDiv.appendChild(img);
+  oneCharacterDiv.innerHTML += `
+  <div class="one-character-div-name">${character.name}</div>`;
+
+  if (character.house !== '') {
+    /* oneCharacterDiv.innerHTML += `
+  <div class="one-character-div-house">${createImage('assets/houses/' + character.house + '.png', character.house)}</div>`;*/
+    oneCharacterDiv.innerHTML += `<div class="one-character-div-house"><img src="/assets/houses/${character.house}.png"></div>`;
+  } else {
+    oneCharacterDiv.innerHTML += '<div class="one-character-div-house"></div>';
+  }
+
+  oneCharacterDiv.innerHTML += `<div>${character.bio}</div>`;
 
 
   container.appendChild(oneCharacterDiv);
@@ -100,4 +122,24 @@ function showCharacters(userDatas) {
     });
     mainDiv.appendChild(characterDiv);
   }
+}
+
+function showIfNotFound(found) {
+  if (!found) {
+    let container = document.querySelector('.one-character');
+    let oneCharacterDiv = createCharacterDiv(container, 'one-character-div');
+    oneCharacterDiv.innerHTML = 'Character not found';
+    container.appendChild(oneCharacterDiv);
+  }
+}
+function searchForCharacter(userDatas) {
+  let searched = document.querySelector('#search-text').value.toLowerCase();
+  let found = false;
+  for (let i = 0; i < userDatas.length; i++) {
+    if (userDatas[i].name.toLowerCase() === searched) {
+      found = true;
+      showOneCharacter(userDatas[i]);
+    }
+  }
+  showIfNotFound(found);
 }

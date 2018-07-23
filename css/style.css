@@ -59,12 +59,28 @@
 }
 
 .one-character-div{
-    text-align: center;
     color: #ccc;
+}
+
+.one-character-div div{
+    padding:1px;
+    min-height: 40px;
 }
 
 .one-character-div img{
     max-width: 100%;
+}
+
+.one-character-div-name{
+    width: 70%;
+    margin-right: 0px;
+    float: left;
+    font-weight: bold;
+}
+.one-character-div-house{
+    width: 30%;
+    float: left;
+    text-align: right;
 }
   
   @media(max-width:1200px){
