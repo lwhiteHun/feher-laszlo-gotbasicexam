@@ -12,11 +12,14 @@
   h3{
     color: #ccc;
   }
-
+  h6{
+    text-align: center;
+    margin-top:2px;
+  }
   div{
     position:relative;
     box-sizing:border-box;
-    padding: 20px;
+    padding: 10px;
   }
   .container{
     width:100%;
@@ -46,13 +49,22 @@
 
   .character-div{
       width: 12.5%;
-      min-height:200px;
+      min-height:150px;
       float: left;
       padding: 2px;
+      text-align: center;
   }
   .character-div img{
-    max-width: 100px;
-    float: left;
+    max-width: 80px;
+}
+
+.one-character-div{
+    text-align: center;
+    color: #ccc;
+}
+
+.one-character-div img{
+    max-width: 100%;
 }
   
   @media(max-width:1200px){

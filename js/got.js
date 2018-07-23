@@ -53,12 +53,39 @@ function orderCharactersToNameAsc(userDatas) {
   }
 }
 
+function createCharacterDiv(container, divname) {
+  var oneCharacterDiv = container.querySelector(`.${divname}`);
+  if (!oneCharacterDiv) {
+    oneCharacterDiv = document.createElement('div');
+    oneCharacterDiv.className = divname;
+    container.appendChild(oneCharacterDiv);
+  }
+  return oneCharacterDiv;
+}
+
+function showOneCharacter(character) {
+  let container = document.querySelector('.one-character');
+  let oneCharacterDiv = createCharacterDiv(container, 'one-character-div');
+  oneCharacterDiv.innerHTML = '';
+  let img = document.createElement('img');
+  img.src = '/' + character.picture;
+  img.alt = character.name;
+  img.onerror = function (e) {
+    e.target.src = '/assets/noimage.png';
+  };
+  oneCharacterDiv.innerHTML = '';
+  oneCharacterDiv.appendChild(img);
+
+
+  container.appendChild(oneCharacterDiv);
+}
+
 function showCharacters(userDatas) {
   let mainDiv = document.querySelector('.character-list');
   for (let i = 0; i < userDatas.length; i++) {
     let characterDiv = document.createElement('div');
     characterDiv.className = 'character-div';
-
+    /*
     let characterImg = document.createElement('img');
     characterImg.src = '/' + userDatas[i].portrait;
     characterImg.alt = userDatas[i].name;
@@ -66,7 +93,11 @@ function showCharacters(userDatas) {
       e.target.src = '/assets/noimage.png';
     };
     characterDiv.appendChild(characterImg);
+    */
     characterDiv.innerHTML = `<img src="/${userDatas[i].portrait}" alt=""><h6>${userDatas[i].name}</h6>`;
+    characterDiv.addEventListener('click', function () {
+      showOneCharacter(userDatas[i]);
+    });
     mainDiv.appendChild(characterDiv);
   }
 }
