@@ -1,0 +1,12 @@
+CREATE TABLE characters (
+    id int NOT NULL UNIQUE AUTO_INCREMENT,
+    dead varchar(5),
+    name varchar(100) NOT NULL,
+    alias varchar(100),
+    portrait varchar(100) NOT NULL,
+    picture varchar(100) NOT NULL,
+    bio text,
+    organization varchar(100),
+    house varchar(100),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
