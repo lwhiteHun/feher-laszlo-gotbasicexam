@@ -78,6 +78,16 @@ function createImage(target, alt) {
   return img;
 }
 
+function getHouseIcon(house) {
+  let result = '<div class="one-character-div-house"></div>';
+  if (house !== '') {
+    /* result= `
+      <div class="one-character-div-house">${createImage('assets/houses/' + house + '.png', house)}</div>`;*/
+    result = `<div class="one-character-div-house"><img src="/assets/houses/${house}.png"></div>`;
+  }
+  return result;
+}
+
 function showOneCharacter(character) {
   let container = document.querySelector('.one-character');
   let oneCharacterDiv = createCharacterDiv(container, 'one-character-div');
@@ -87,14 +97,7 @@ function showOneCharacter(character) {
   oneCharacterDiv.appendChild(img);
   oneCharacterDiv.innerHTML += `
   <div class="one-character-div-name">${character.name}</div>`;
-
-  if (character.house !== '') {
-    /* oneCharacterDiv.innerHTML += `
-  <div class="one-character-div-house">${createImage('assets/houses/' + character.house + '.png', character.house)}</div>`;*/
-    oneCharacterDiv.innerHTML += `<div class="one-character-div-house"><img src="/assets/houses/${character.house}.png"></div>`;
-  } else {
-    oneCharacterDiv.innerHTML += '<div class="one-character-div-house"></div>';
-  }
+  oneCharacterDiv.innerHTML +=  getHouseIcon(character.house);
 
   oneCharacterDiv.innerHTML += `<div>${character.bio}</div>`;
 
