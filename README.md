@@ -1,0 +1,2 @@
+# feher-laszlo-gotbasicexam
+VIZSGAFELADAT
