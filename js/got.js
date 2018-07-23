@@ -82,17 +82,10 @@ function getHouseIcon(house) {
   return houseDiv;
 }
 
-function createCharacterNameDiv(name) {
+function createDivToAppend(value, classname) {
   let nameDiv = document.createElement('div');
-  nameDiv.className = 'one-character-div-name';
-  nameDiv.innerHTML = name;
-  return nameDiv;
-}
-
-function createCharacterBioDiv(bio) {
-  let nameDiv = document.createElement('div');
-  nameDiv.className = 'one-character-div-bio';
-  nameDiv.innerHTML = bio;
+  nameDiv.className = classname;
+  nameDiv.innerHTML = value;
   return nameDiv;
 }
 
@@ -102,9 +95,9 @@ function showOneCharacter(character) {
   oneCharacterDiv.innerHTML = '';
 
   oneCharacterDiv.appendChild(createImage(character.picture, character.name));
-  oneCharacterDiv.appendChild(createCharacterNameDiv(character.name));
+  oneCharacterDiv.appendChild(createDivToAppend(character.name, 'one-character-div-name'));
   oneCharacterDiv.appendChild(getHouseIcon(character.house));
-  oneCharacterDiv.appendChild(createCharacterBioDiv(character.bio));
+  oneCharacterDiv.appendChild(createDivToAppend(character.bio, 'one-character-div-bio'));
 
   container.appendChild(oneCharacterDiv);
 }
@@ -126,8 +119,8 @@ function setCharacterClickEvent(characterDiv, character) {
   });
 }
 
-function createCharacterHeading(name) {
-  let nameHeading = document.createElement('h6');
+function createCharacterNameP(name) {
+  let nameHeading = document.createElement('p');
   nameHeading.innerHTML = name;
   return nameHeading;
 }
@@ -140,7 +133,7 @@ function showCharacters(userDatas) {
 
     let characterImg =  createImage(userDatas[i].portrait, userDatas[i].name);
     characterDiv.appendChild(characterImg);
-    characterDiv.appendChild(createCharacterHeading(userDatas[i].name));
+    characterDiv.appendChild(createCharacterNameP(userDatas[i].name));
 
     setCharacterClickEvent(characterDiv, userDatas[i]);
 
@@ -156,6 +149,7 @@ function showIfNotFound(found) {
     container.appendChild(oneCharacterDiv);
   }
 }
+
 function searchForCharacter(userDatas) {
   let searched = document.querySelector('#search-text').value.toLowerCase();
   let found = false;
