@@ -1,7 +1,7 @@
 function getData(url, callbackFunc) {
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
+  xhttp.onreadystatechange = function call() {
+    if (this.readyState === 4 && this.status === 200) {
       callbackFunc(this);
     }
   };
@@ -23,11 +23,9 @@ function successAjax(xhttp) {
       Ha valemelyik függvényeteknek kell, akkor paraméterként adjátok át.
     */
   deleteNotAliveCharacters(userDatas);
-  console.log(userDatas);
   orderCharactersToNameAsc(userDatas);
-  console.log(userDatas);
   showCharacters(userDatas);
-  document.querySelector('#search-button').addEventListener('click', function () {
+  document.querySelector('#search-button').addEventListener('click', function event() {
     searchForCharacter(userDatas);
   });
 }
@@ -45,7 +43,6 @@ function deleteNotAliveCharacters(userDatas) {
     }
   }
 }
-
 function orderCharactersToNameAsc(userDatas) {
   for (let i = 0; i < userDatas.length - 1; i++) {
     for (let j = i + 1; j < userDatas.length; j++) {
@@ -67,40 +64,47 @@ function createCharacterDiv(container, divname) {
 }
 
 function createImage(target, alt) {
-  // console.log(target);
   let img = document.createElement('img');
   img.src = '/' + target;
   img.alt = alt;
-  img.onerror = function (e) {
+  img.onerror = function imageError(e) {
     e.target.src = '/assets/noimage.png';
   };
-  // console.log(img);
   return img;
 }
 
 function getHouseIcon(house) {
-  let result = '<div class="one-character-div-house"></div>';
-  if (house !== '') {
-    /* result= `
-      <div class="one-character-div-house">${createImage('assets/houses/' + house + '.png', house)}</div>`;*/
-    result = `<div class="one-character-div-house"><img src="/assets/houses/${house}.png"></div>`;
+  let houseDiv = document.createElement('div');
+  houseDiv.className = 'one-character-div-house';
+  if (house.length > 0) {
+    houseDiv.appendChild(createImage(`assets/houses/${house}.png`, house));
   }
-  return result;
+  return houseDiv;
+}
+
+function createCharacterNameDiv(name) {
+  let nameDiv = document.createElement('div');
+  nameDiv.className = 'one-character-div-name';
+  nameDiv.innerHTML = name;
+  return nameDiv;
+}
+
+function createCharacterBioDiv(bio) {
+  let nameDiv = document.createElement('div');
+  nameDiv.className = 'one-character-div-bio';
+  nameDiv.innerHTML = bio;
+  return nameDiv;
 }
 
 function showOneCharacter(character) {
   let container = document.querySelector('.one-character');
   let oneCharacterDiv = createCharacterDiv(container, 'one-character-div');
   oneCharacterDiv.innerHTML = '';
-  let img = createImage(character.picture, character.name);
 
-  oneCharacterDiv.appendChild(img);
-  oneCharacterDiv.innerHTML += `
-  <div class="one-character-div-name">${character.name}</div>`;
-  oneCharacterDiv.innerHTML +=  getHouseIcon(character.house);
-
-  oneCharacterDiv.innerHTML += `<div>${character.bio}</div>`;
-
+  oneCharacterDiv.appendChild(createImage(character.picture, character.name));
+  oneCharacterDiv.appendChild(createCharacterNameDiv(character.name));
+  oneCharacterDiv.appendChild(getHouseIcon(character.house));
+  oneCharacterDiv.appendChild(createCharacterBioDiv(character.bio));
 
   container.appendChild(oneCharacterDiv);
 }
@@ -108,8 +112,24 @@ function showOneCharacter(character) {
 function removeSelectedTags() {
   var characterDivs = document.querySelectorAll('.character-div');
   for (let i = 0; i < characterDivs.length; i++) {
-    characterDivs[i].classList.remove('selected');
+    if (characterDivs[i].classList.contains('selected')) {
+      characterDivs[i].classList.remove('selected');
+    }
   }
+}
+
+function setCharacterClickEvent(characterDiv, character) {
+  characterDiv.addEventListener('click', function clickEvent() {
+    showOneCharacter(character);
+    removeSelectedTags();
+    characterDiv.classList.add('selected');
+  });
+}
+
+function createCharacterHeading(name) {
+  let nameHeading = document.createElement('h6');
+  nameHeading.innerHTML = name;
+  return nameHeading;
 }
 
 function showCharacters(userDatas) {
@@ -117,22 +137,13 @@ function showCharacters(userDatas) {
   for (let i = 0; i < userDatas.length; i++) {
     let characterDiv = document.createElement('div');
     characterDiv.className = 'character-div';
-    /*
-    let characterImg = document.createElement('img');
-    characterImg.src = '/' + userDatas[i].portrait;
-    characterImg.alt = userDatas[i].name;
-    characterImg.onerror = function onerror(e) {
-      e.target.src = '/assets/noimage.png';
-    };
+
+    let characterImg =  createImage(userDatas[i].portrait, userDatas[i].name);
     characterDiv.appendChild(characterImg);
-    */
-    characterDiv.innerHTML = `<img src="/${userDatas[i].portrait}" alt="">
-    <h6>${userDatas[i].name}</h6>`;
-    characterDiv.addEventListener('click', function () {
-      removeSelectedTags();
-      characterDiv.classList.add('selected');
-      showOneCharacter(userDatas[i]);
-    });
+    characterDiv.appendChild(createCharacterHeading(userDatas[i].name));
+
+    setCharacterClickEvent(characterDiv, userDatas[i]);
+
     mainDiv.appendChild(characterDiv);
   }
 }

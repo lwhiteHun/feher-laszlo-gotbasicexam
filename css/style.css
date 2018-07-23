@@ -94,6 +94,10 @@
     float: left;
     text-align: center;
 }
+.one-character-div-bio{
+    width: 100%;
+    float: left;
+}
 
 #search-button{
     min-height: 30px;
@@ -149,14 +153,15 @@
     .one-character-div{
         text-align: center;
     }
-    .one-character-div-name, .one-character-div-house{
+
+    .one-character-div div{
         width: 100%;    
     }
 
   }
   @media(max-width:600px){
     .character-div{
-        width: 50%;
+        width: 100%;
     }
     .one-character-div div:last-child{
         text-align: justify;
