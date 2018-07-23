@@ -34,7 +34,7 @@
   }
   .character-list{
     width: 75%;
-    background: url("/assets/site/mapblue.jpg") no-repeat #ccc;
+    background: url("/assets/site/mapblue.jpg") no-repeat fixed bottom;
     float: left;
     overflow: auto
   }
@@ -157,13 +157,13 @@
     .one-character-div div{
         width: 100%;    
     }
+    .one-character-div-bio{
+        text-align: justify;
+    }
 
   }
   @media(max-width:600px){
     .character-div{
         width: 100%;
-    }
-    .one-character-div div:last-child{
-        text-align: justify;
     }
   }

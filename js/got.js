@@ -151,13 +151,14 @@ function showIfNotFound(found) {
 }
 
 function searchForCharacter(userDatas) {
-  let searched = document.querySelector('#search-text').value.toLowerCase();
+  let searched = document.querySelector('#search-text');
   let found = false;
   for (let i = 0; i < userDatas.length; i++) {
-    if (userDatas[i].name.toLowerCase() === searched) {
+    if (userDatas[i].name.toLowerCase() === searched.value.toLowerCase()) {
       found = true;
       showOneCharacter(userDatas[i]);
     }
   }
+  searched.value = '';
   showIfNotFound(found);
 }
